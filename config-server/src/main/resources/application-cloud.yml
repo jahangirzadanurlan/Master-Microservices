@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitlab.com/div7625605/microservice-config.git
+          username: cahangirzadenurlan043
+          password: glpat-HsM65S1MHHsrKyEX_BYa
