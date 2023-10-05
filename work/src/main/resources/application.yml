@@ -5,3 +5,9 @@ spring:
     config:
       name: work-service
       profile: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
