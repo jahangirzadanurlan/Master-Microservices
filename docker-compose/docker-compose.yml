@@ -1,5 +1,32 @@
 version: '3'
 services:
+  eurekaserver:
+    build: ../eureka-server
+    image: eurekaserver-ms
+    container_name: eurekaserver
+    ports:
+      - "8761:8761"
+    extends:
+      file: common-config.yml
+      service:  microservice-base-config
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+
+  gateway-server:
+    build: ../api-gateway
+    image: api-gateway-ms
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - person-service
+      - work
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+    extends:
+      file: common-config.yml
+      service:  microservice-gateway-config
+
   configserver:
     build: ../config-server
     image: configserver
@@ -22,13 +49,13 @@ services:
     image: person-service-ms
     container_name: person-service
     ports:
-      - "8080:8080"
+      - "8085:8085"
     environment:
       SPRING_APPLICATION_NAME: "person-service"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/product"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   work:
     build: ../work
@@ -41,7 +68,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/product"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   db:
     image: postgres:latest
