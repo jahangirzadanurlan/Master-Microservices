@@ -263,7 +263,6 @@ services:
       - "8081:8081"
     environment:
       SPRING_APPLICATION_NAME: "work"
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/product"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
